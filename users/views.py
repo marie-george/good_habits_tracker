@@ -15,5 +15,8 @@ class UserUpdateAPIView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
-        return User.objects.filter(pk=user.id)
+        if getattr(self, "swagger_fake_view", False):
+            return User.objects.none()
+        else:
+            user = self.request.user
+            return User.objects.filter(pk=user.id)

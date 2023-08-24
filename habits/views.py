@@ -24,8 +24,11 @@ class HabitUpdateAPIView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
-        return Habit.objects.filter(creator=user)
+        if getattr(self, "swagger_fake_view", False):
+            return Habit.objects.none()
+        else:
+            user = self.request.user
+            return Habit.objects.filter(creator=user)
 
 
 class HabitDestroyAPIView(generics.DestroyAPIView):
@@ -33,8 +36,11 @@ class HabitDestroyAPIView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
-        return Habit.objects.filter(creator=user)
+        if getattr(self, "swagger_fake_view", False):
+            return Habit.objects.none()
+        else:
+            user = self.request.user
+            return Habit.objects.filter(creator=user)
 
 
 class HabitListAPIView(generics.ListAPIView):
@@ -44,8 +50,11 @@ class HabitListAPIView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
-        return Habit.objects.filter(creator=user)
+        if getattr(self, "swagger_fake_view", False):
+            return Habit.objects.none()
+        else:
+            user = self.request.user
+            return Habit.objects.filter(creator=user)
 
 
 class PublicHabitListAPIView(generics.ListAPIView):
