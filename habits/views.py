@@ -1,6 +1,7 @@
 from rest_framework import generics
 
 from habits.models import Habit
+from habits.paginators import HabitPaginator
 from habits.serializers import HabitSerializer
 from habits.services import set_schedule
 
@@ -27,6 +28,7 @@ class HabitDestroyAPIView(generics.DestroyAPIView):
 class HabitListAPIView(generics.ListAPIView):
     serializer_class = HabitSerializer
     queryset = Habit.objects.all()
+    pagination_class = HabitPaginator
 
 
 class PublicHabitListAPIView(generics.ListAPIView):
