@@ -10,6 +10,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=35, verbose_name='фамилия')
     email = models.EmailField(unique=True, verbose_name='email')
     phone = models.CharField(max_length=35, verbose_name='телефон', **NULLABLE)
+    chat_id = models.CharField(max_length=100, verbose_name='чат ID телеграмм', **NULLABLE)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
