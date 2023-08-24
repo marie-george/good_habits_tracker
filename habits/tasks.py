@@ -9,12 +9,6 @@ from habits.models import Habit
 @shared_task
 def habits_notification(object_pk):
     habit = Habit.objects.get(pk=object_pk)
-    # send_mail(
-    #     subject='Напоминание о привычке',
-    #     message=f'Трекер привычек напоминает: требуется совершить {habit.action}',
-    #     from_email=settings.EMAIL_HOST_USER,
-    #     recipient_list=[habit.creator.email]
-    # )
     bot = TeleBot(settings.TG_BOT_TOKEN)
     message = f'Трекер привычек напоминает: требуется совершить {habit.action} в {habit.starting_time} в {habit.place}'
     print(message)
