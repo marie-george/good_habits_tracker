@@ -92,8 +92,8 @@ services:
     build: .
     networks:
       - bridge1
-    command: >
-      bash -c "celery -A config beat —loglevel=info"
+    command: celery -A config beat —loglevel=info
+#      bash -c "celery -A config beat —loglevel=info"
     volumes:
       - .:/app
     depends_on:
