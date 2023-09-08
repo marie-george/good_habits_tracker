@@ -3,6 +3,8 @@ version: '3'
 services:
   db:
     image: postgres:14-alpine3.17
+    networks:
+      - bridge1
     container_name: db_app
     env_file:
       - .env
@@ -18,15 +20,19 @@ services:
 
   redis:
     image: redis:7.0.2-alpine
+    networks:
+      - bridge1
     container_name: redis_app
     command: redis-server --save 20 1 --loglevel warning
     ports:
-      - "6376:6379"
+      - "6379:6379"
     volumes:
       - ./data/cache:/data
 
   web:
     image: nginx
+    networks:
+      - bridge1
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
@@ -41,6 +47,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    networks:
+      - bridge1
     image: app
     container_name: app_container
     depends_on:
@@ -64,6 +72,8 @@ services:
     restart: always
     build:
       context: .
+    networks:
+      - bridge1
     container_name: celery
     env_file:
       - .env
@@ -80,6 +90,8 @@ services:
   celery-beat:
     container_name: celery-beat
     build: .
+    networks:
+      - bridge1
     command: >
       bash -c "celery -A config beat —loglevel=info"
     volumes:
@@ -87,3 +99,7 @@ services:
     depends_on:
       - app
       - celery
+
+networks:
+  bridge1:
+    driver: bridge
