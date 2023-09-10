@@ -182,7 +182,7 @@ TG_BOT_TOKEN = os.getenv("TG_HABBIT_BOT_TOKEN")
 TG_CHAT_ID = os.getenv("TG_CHAT_ID")
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',
+    'http://app_container:8000',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
